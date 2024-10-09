@@ -5,8 +5,8 @@ export function createAlert(message,icon,foco){
   onFocus(foco);
   const MySwal = withReactContent(Swal);
   MySwal.fire({
-    icon: icon,
     title: message,
+    icon: icon,
     showConfirmButton: false,
   });
 }

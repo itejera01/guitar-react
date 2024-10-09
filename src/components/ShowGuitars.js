@@ -19,10 +19,9 @@ const ShowGuitars = () => {
   }, []);
 
   const getGuitars = async () => {
-      const response = axios.get(url);
+      const response = await axios.get(url);
       setGuitars(response.data);
-  };
-
+  }; 
   const openModal = (op,id,name,description,price,stock) => {
     setId('');
     setName('');
@@ -51,8 +50,8 @@ const ShowGuitars = () => {
       <header className="bg-gray-900 text-white p-4 flex justify-center">
         <h1 className="text-3xl font-bold">Guitarras</h1>
       </header>
-      <div class="container flex space-between mx-auto items-center justify-center p-4">
-        <button onClick={()=>openModal(1)} class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" id="btn-crear">
+      <div className="container flex space-between mx-auto items-center justify-center p-4">
+        <button onClick={()=>openModal(1)} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" id="btn-crear">
           <i className="fa-solid fa-plus"></i> Añadir Guitarra
         </button>
       </div>
@@ -93,7 +92,7 @@ const ShowGuitars = () => {
           </tbody>
         </table>
       </div>
-      <div id="modalGuitars" className="modal fade" aria-hidden="true">
+      <div id="modalGuitars" className="modal fade hidden">
         <div className="modal-dialog modal-dialog-centered">
           <div className="modal-content">
             <div className="modal-header">

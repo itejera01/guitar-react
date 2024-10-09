@@ -5,7 +5,7 @@ import withReactContent from 'sweetalert2-react-content';
 import { createAlert } from '../functions.js';
 
 const ShowGuitars = () => {
-  const url = 'http://localhost/apiGuitarras/guitarraController.php';
+  const url = 'http://localhost/apiGuitarras/controllers/guitarraController.php';
   const [guitars, setGuitars] = useState([]);
   const [id, setId] = useState('');
   const [name, setName] = useState('');

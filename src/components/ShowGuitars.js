@@ -20,6 +20,7 @@ const ShowGuitars = () => {
 
   const getGuitars = async () => {
       const response = await axios.get(url);
+      console.log(response.data);
       setGuitars(response.data);
   }; 
   const openModal = (op,id,name,description,price,stock) => {
@@ -39,24 +40,21 @@ const ShowGuitars = () => {
     }else{
       setTitle("Ingresar guitarra");
     }
-    window.setTimeout(() => {
-      document.getElementById('nombre').focus();
-    },500);
   }
 
   const validar = () =>{
     var parametros;
     var metodo;
-    if (name.trim() = ''){
+    if (name.trim() == ''){
       createAlert('Debe ingresar el nombre de la guitarra','warning');
     }
-    if (description.trim() = ''){
+    if (description.trim() == ''){
       createAlert('Debe enviar la descripción de la guitarra','warning');
     }
-    if (price.trim() = ''){
+    if (price.trim() == ''){
       createAlert('Debe enviar el precio de la guitarra','warning');
     }
-    if (stock.trim() = ''){
+    if (stock.trim() == ''){
       createAlert('Debe enviar el stock de la guitarra','warning');
     }
     if (operation === 1){
@@ -99,7 +97,7 @@ const ShowGuitars = () => {
         </button>
       </div>
       <div className="container flex mx-auto p-4 justify-center">
-        <table className="table-auto">
+        <table className="table">
           <thead>
             <tr>
               <th className="px-4 py-2">Id</th>
@@ -107,19 +105,19 @@ const ShowGuitars = () => {
               <th className="px-4 py-2">Descripción</th>
               <th className="px-4 py-2">Precio</th>
               <th className="px-4 py-2">Stock</th>
-              <th className="px-4 py-2">Acciones</th>
+              <th className="px-4 py-2"></th>
             </tr>
           </thead>
-          <tbody id="tabla-datos">
-            {guitars.map((guitar, i) => {
+          <tbody>
+            {guitars.map((guitar) => {
               <tr key={guitar.id}>
-                <td className="px-4 py-2">{i+1}</td>
-                <td className="px-4 py-2">{guitar.name}</td>
-                <td className="px-4 py-2">{guitar.description}</td>
-                <td className="px-4 py-2">${new Intl.NumberFormat('en-US').format(guitar.price)}</td>
+                <td className="px-4 py-2">{guitar.id}</td>
+                <td className="px-4 py-2">{guitar.nombre}</td>
+                <td className="px-4 py-2">{guitar.descripcion}</td>
+                <td className="px-4 py-2">${new Intl.NumberFormat('en-US').format(guitar.precio)}</td>
                 <td className="px-4 py-2">{guitar.stock}</td>
                 <td className="px-4 py-2">
-                  <button onclick={()=>openModal(2,guitar.id,guitar.name,guitar.description,guitar.price,guitar.stock)} 
+                  <button onclick={()=>openModal(2,guitar.id,guitar.nombre,guitar.descripcion,guitar.precio,guitar.stock)} 
                           className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mr-2"
                           data-bs-toggle="modal" data-bs-target="#modalGuitars">
                     <i className="fa-solid fa-pen-to-square"></i>
@@ -130,8 +128,7 @@ const ShowGuitars = () => {
                   </button>
                 </td>
               </tr>
-            })
-            }
+            })}
           </tbody>
         </table>
       </div>
@@ -146,17 +143,17 @@ const ShowGuitars = () => {
               <input type="hidden" id="id" name="id" />
               <div className="input-group mb-4">
                 <span className="input-group-text"><i className="fa-solid fa-guitar"></i> Nombre</span>
-                <input type="text" id="name" name="name" className="form-control" placeholder='nombre' value={name}
+                <input type="text" id="nombre" name="nombre" className="form-control" placeholder='nombre' value={name}
                 onChange={(e) => setName(e.target.value)}/>
               </div>
               <div className="input-group mb-4">
                 <span className="input-group-text"><i className="fa-solid fa-file-pen"></i> Descripcion</span>
-                <input type="text" id="description" name="description" className="form-control" placeholder='descripcion' value={description}
+                <input type="text" id="descripcion" name="descripcion" className="form-control" placeholder='descripcion' value={description}
                 onChange={(e) => setDescription(e.target.value)}/>
               </div>  
               <div className="input-group mb-4">
                 <span className="input-group-text"><i className="fa-solid fa-dollar-sign"></i> Precio</span>
-                <input type="number" id="price" name="price" className="form-control" placeholder='Precio (U$D)' value={price}
+                <input type="number" id="precio" name="precio" className="form-control" placeholder='Precio (U$D)' value={price}
                 onChange={(e) => setPrice(e.target.value)}/>
               </div>  
               <div className="input-group mb-4">
@@ -165,7 +162,7 @@ const ShowGuitars = () => {
                 onChange={(e) => setStock(e.target.value)}/>
               </div>  
               <div className="d-grid col-6 mx-auto">
-                <button className="btn btn-primary">
+                <button onClick={()=> validar()}className="btn btn-primary">
                   <i className="fa-solid fa-floppy-disk"></i>Guardar
                 </button>
               </div>

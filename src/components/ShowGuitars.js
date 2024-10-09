@@ -44,6 +44,49 @@ const ShowGuitars = () => {
     },500);
   }
 
+  const validar = () =>{
+    var parametros;
+    var metodo;
+    if (name.trim() = ''){
+      createAlert('Debe ingresar el nombre de la guitarra','warning');
+    }
+    if (description.trim() = ''){
+      createAlert('Debe enviar la descripción de la guitarra','warning');
+    }
+    if (price.trim() = ''){
+      createAlert('Debe enviar el precio de la guitarra','warning');
+    }
+    if (stock.trim() = ''){
+      createAlert('Debe enviar el stock de la guitarra','warning');
+    }
+    if (operation === 1){
+      parametros = {name: name, description: description, price: price, stock: stock};
+      metodo = 'POST';
+    }else{
+      parametros = {id: id, name: name, description: description, price: price, stock: stock};
+      metodo = 'PUT';
+    }
+    enviarSoliciud(metodo,parametros);
+  }
+  const enviarSoliciud = async (metodo,parametros) => {
+    await axios({
+      method: metodo,
+      url: url,
+      data: parametros
+    }).then(function(response){
+      var tipo = response.data[0];
+      var msj = response.data[1];
+      createAlert(msj,tipo);
+      if(tipo == 'success'){
+        document.getElementById('btnCerrar').click();
+        getGuitars();
+      }
+    }).catch(function(error){
+      createAlert("Error en la solicitud",'error');
+      console.log(error);  
+    });
+  }  
+
 
   return (
     <div className='App'>
@@ -128,7 +171,7 @@ const ShowGuitars = () => {
               </div>
             </div>
             <div className="modal-footer">
-              <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+              <button type="button" id="btnCerrar"className="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
             </div>
           </div>
         </div>

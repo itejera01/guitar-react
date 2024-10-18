@@ -4,7 +4,7 @@ import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import { createAlert } from '../functions';
 import { Link } from 'react-router-dom';
-const url = 'http://localhost/apiGuitarras/controllers/guitarraController.php';
+const urlApi = 'http://localhost/apiGuitarras/controllers/guitarraController.php';
 
 const ShowGuitars = () => {
   const [guitars, setGuitars] = useState([]);
@@ -14,7 +14,7 @@ const ShowGuitars = () => {
   }, []);
 
   const getGuitars = async () => {
-    const response = await axios.get(url);
+    const response = await axios.get(urlApi);
     console.log(response.data);
     setGuitars(response.data);
   };
@@ -32,14 +32,13 @@ const ShowGuitars = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         const params = { headers: { 'Content-Type': 'application/json' }, data: { 'id': id } };
-        axios.delete(url, params);
+        axios.delete(urlApi, params);
         getGuitars();
       } else {
         createAlert("La guitarra no fue eliminada", 'info');
       }
     })
   }
-
   return (
     <div className='App'>
       <header className="bg-gray-800 text-white py-4 px-6 shadow-md flex justify-center">
@@ -48,7 +47,7 @@ const ShowGuitars = () => {
       <div className="container flex space-between mx-auto items-center justify-center p-4">
         <Link to='/create'>
           <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4" id="btn-crear" data-bs-toggle="modal" data-bs-target="#modalGuitars">
-            <i className="fa-solid fa-plus"></i> Añadir Guitarra
+            <i className="fa-solid fa-plus mr-3"></i> Añadir Guitarra
           </button>
         </Link>
       </div>
@@ -62,20 +61,22 @@ const ShowGuitars = () => {
         )}
         <div className="grid grid-cols-4 gap-6 p-4">
           {guitars.map((guitar) => (
-            <div className="bg-white rounded-lg shadow-md w-full p-4 m-4">
-              <h3 className="text-lg font-bold mb-4">{guitar.nombre}</h3>
-              <p className="text-gray-600">{guitar.descripcion}</p>
-              <p className="text-gray-600">Precio: ${new Intl.NumberFormat('en-US').format(guitar.precio)}</p>
-              <p className="text-gray-600">Stock: {guitar.stock}</p>
-              <div className="flex justify-end">
-                <Link to='edit/${guitar.id}'>
+            <div key={guitar.id} className="bg-white rounded-lg shadow-md p-4 m-4">
+              <img className="w-full h-64 object-cover mb-4" src={`descarga.jpg`} alt={guitar.nombre} />
+              <h1 className="text-xl font-bold my-2">{guitar.nombre}</h1>
+              <h2 className="text-green-600 font-bold">${new Intl.NumberFormat('en-US').format(guitar.precio)}</h2>
+              <div className="flex space-x-4">
+                <p className="text-gray-500 pt-4">{guitar.descripcion}</p>
+                <p className="text-blue-400 pt-4">{guitar.stock === 0 ? 'No Hay Stock' : guitar.stock}</p>
+              </div>
+              <div className="flex justify-end space-x-4">
+                <Link to={`/edit/${guitar.id}`}>
                   <button
-                    className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mr-2"
+                    className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
                     data-bs-toggle="modal" data-bs-target="#modalGuitars">
                     <i className="fa-solid fa-pen-to-square"></i>
                   </button>
                 </Link>
-                &nbsp;
                 <button onClick={() => deleteGuitar(guitar.id)} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
                   <i className="fa-solid fa-trash-can"></i>
                 </button>

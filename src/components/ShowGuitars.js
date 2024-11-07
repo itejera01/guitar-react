@@ -11,7 +11,7 @@ const ShowGuitars = () => {
 
   useEffect(() => {
     getGuitars();
-  }, []);
+  }, [guitars]);
 
   const getGuitars = async () => {
     const response = await axios.get(urlApi);
@@ -33,7 +33,6 @@ const ShowGuitars = () => {
       if (result.isConfirmed) {
         const params = { headers: { 'Content-Type': 'application/json' }, data: { 'id': id } };
         axios.delete(urlApi, params);
-        getGuitars();
       } else {
         createAlert("La guitarra no fue eliminada", 'info');
       }

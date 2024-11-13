@@ -37,6 +37,7 @@ const ShowGuitars = () => {
       }
     })
   }
+
   return (
     <div className='App'>
       <header className="bg-gray-800 text-white py-4 px-6 shadow-md flex justify-center">
@@ -57,25 +58,26 @@ const ShowGuitars = () => {
             </p>
           </>
         )}
-        <div className="grid grid-cols-4 gap-6 p-4">
+        <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 p-4">
           {guitars.map((guitar) => (
             <div key={guitar.id} className="bg-white rounded-lg shadow-md p-4 m-4">
-              <img className="w-full h-64 object-cover mb-4" src={`descarga.jpg`} alt={guitar.nombre} />
+              <img className="w-full mb-4" src={`logo192.png`} alt={guitar.nombre} />
               <h1 className="text-xl font-bold my-2">{guitar.nombre}</h1>
               <h2 className="text-green-600 font-bold">${new Intl.NumberFormat('en-US').format(guitar.precio)}</h2>
               <div className="flex space-x-4">
                 <p className="text-gray-500 pt-4">{guitar.descripcion}</p>
-                <p className="text-blue-400 pt-4">{guitar.stock === 0 ? 'No Hay Stock' : guitar.stock}</p>
+                <p className="text-blue-400 pt-4 text-xl font-bold">{guitar.stock === 0 ? 'No Hay Stock' : guitar.stock}</p>
               </div>
-              <div className="flex justify-end space-x-4">
+              <div className="flex justify-between mt-4">
                 <Link to={`/edit/${guitar.id}`}>
                   <button
-                    className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
-                    data-bs-toggle="modal" data-bs-target="#modalGuitars">
+                    className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded h-auto">
                     <i className="fa-solid fa-pen-to-square"></i>
                   </button>
                 </Link>
-                <button onClick={() => deleteGuitar(guitar.id)} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                <button
+                  onClick={() => deleteGuitar(guitar.id)}
+                  className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded h-auto">
                   <i className="fa-solid fa-trash-can"></i>
                 </button>
               </div>
@@ -83,7 +85,12 @@ const ShowGuitars = () => {
           ))}
         </div>
       </div>
-    </div>
+      <footer className="bg-gray-800 text-white py-4 px-6 flex justify-center">
+        <p>
+          Copyright &copy; {new Date().getFullYear()} Ignacio Tejera. Todos los derechos reservados.
+        </p>
+      </footer>
+    </div >
   );
 }
 

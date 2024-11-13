@@ -14,8 +14,7 @@ const ShowGuitars = () => {
   }, [guitars]);
 
   const getGuitars = async () => {
-    const response = await axios.get(urlApi);
-    console.log(response.data);
+    const response = await axios.get(urlApi);;
     setGuitars(response.data);
   };
 
